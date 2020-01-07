@@ -1,6 +1,7 @@
 #!/usr/bin/python3.7
 #coding:utf-8
 
+
 import os
 import pwd
 import time
@@ -36,7 +37,8 @@ def menu():
     print("[1] - Show logins saved")
     print("[2] - Add logins")
     print("[3] - Delete logins")
-    print("[4] - Exit\r\n")
+    print("[4] - Find password associated with service")
+    print("[5] - Exit\r\n")
 
     choix = input("Choice : ")
 
@@ -56,7 +58,11 @@ def menu():
         time.sleep(1)
         os.system('clear')
         delete_id()
-    elif choix == 4 :
+    elif choix == 4:
+        time.sleep(1)
+        os.system('clear')
+        find_service()
+    elif choix == 5 :
         print("\r\n[#] Sortie\r\n")
         time.sleep(1)
         os.system('clear')
@@ -143,6 +149,20 @@ def delete_id():
         print("[!] Service not found")
 
     time.sleep(1)
+    os.system('clear')
+    menu()
+
+def find_service():
+    print("\n[4] - Find password associated with service\n")
+    show_service = input("Service : ")
+
+    cursor.execute("""SELECT pass, login, service FROM keys""")
+    for row in cursor:
+        if row[2] == show_service :
+            print('\n # {2}, {1}, {0}'.format(row[0], row[1], row[2]))
+
+    print("\n")
+    time.sleep(3)
     os.system('clear')
     menu()
 
